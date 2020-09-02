@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+    color: black;
+    font-family: system-ui, -apple-system, 
+    BlinkMacSystemFont, “Segoe UI”, 
+    Roboto, Oxygen-Sans, Ubuntu, Cantarell, 
+    “Helvetica Neue”, Arial, sans-serif;
+}
+
+h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-weight: 400;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    outline: white;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    background-color: #1CD624;
+    font-weight: bold;
+    transition: 400ms;
+}
+
+button:hover {
+    background-color: #10C218;
+    transform: scale(1.03);
+}
+
+button:active {
+    transform: scale(1.05);
+}
+    </style>
+</head>
+<body>
+    <h1>Update the ticket info</h1>
+    <h2>Set the ticket's title</h2>
+    <input type="text" placeholder="Place the Ticket's Ttile" id="ticket1"></input>
+    <h2>Set the Ticket's Response</h2>
+    <input type="text" placeholder="Answer the ticket" id="ticket2"></input>
+    <button onclick="buttonPressed()">Update</button>
+    <script src="https://static.zdassets.com/zendesk_app_framework_sdk/2.0/zaf_sdk.min.js"></script>
+    <script>
+    var client = ZAFClient.init();
+    client.invoke('resize', { width: '100%', height: '350px' });
+
+
+    input1 = document.getElementById('ticket1');
+    input2 = document.getElementById('ticket2');
+
+    function input1Update() {
+        let ticketTitle = input1.value;
+        return ticketTitle;
+    }
+
+    function input2Update() {
+        let ticketResponse = input2.value;
+        return ticketResponse;
+    }
+
+    function buttonPressed() {
+        const ticketTitle = input1Update();
+        const ticketResponse = input2Update();
+        client.set('ticket.subject', `${ticketTitle}`);
+        client.invoke('ticket.comment.appendText', `${ticketResponse}`);
+    }
+  </script>
+</body>
+</html>
